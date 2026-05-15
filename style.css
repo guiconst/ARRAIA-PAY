@@ -1,0 +1,1229 @@
+:root {
+    --gold: #F4B400;
+    --orange: #FF7A00;
+    --red: #D62828;
+    --brown: #8B4513;
+    --cream: #FFF9F0;
+    --white: #FFFFFF;
+    --dark: #1A1A1A;
+    --gray: #6B7280;
+    --light-gray: #F3F4F6;
+    --border: rgba(244, 180, 0, 0.25);
+    --shadow: 0 4px 24px rgba(244, 180, 0, 0.15);
+    --shadow-lg: 0 8px 40px rgba(244, 180, 0, 0.2);
+    --radius: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --grad: linear-gradient(135deg, var(--gold), var(--orange));
+    --grad-soft: linear-gradient(135deg, #FFF3CC, #FFE0B2);
+
+    /* Variáveis de tema de clima — sobrescritas pelo JS */
+    --weather-bg: #FFF9F0;
+    --weather-bg2: #FFF3CC;
+    --weather-accent: #FF7A00;
+    --weather-hero-grad: linear-gradient(135deg, #F4B400, #FF7A00);
+    --weather-card-bg: #FFFFFF;
+    --weather-badge-bg: rgba(255,255,255,0.9);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--weather-bg);
+    color: var(--dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 1.5s ease, background-color 1.5s ease;
+}
+
+/* ============================================================
+   TEMAS DE CLIMA — aplicados via body class pelo JS
+   ============================================================ */
+
+/* FRIO (< 15°C) — Azul gélido, neblina */
+body.weather-cold {
+    --weather-bg:        #E8F4FD;
+    --weather-bg2:       #D6EAF8;
+    --weather-accent:    #1565C0;
+    --weather-hero-grad: linear-gradient(135deg, #1565C0 0%, #42A5F5 50%, #90CAF9 100%);
+    --weather-card-bg:   #EBF5FB;
+    --weather-badge-bg:  rgba(227, 242, 253, 0.95);
+    --border:            rgba(21, 101, 192, 0.2);
+    --shadow:            0 4px 24px rgba(21, 101, 192, 0.12);
+    --grad-soft:         linear-gradient(135deg, #DBEAFE, #BFDBFE);
+    background: var(--weather-bg);
+}
+
+/* AMENO (15–24°C) — Laranja dourado padrão festa junina */
+body.weather-mild {
+    --weather-bg:        #FFF9F0;
+    --weather-bg2:       #FFF3CC;
+    --weather-accent:    #FF7A00;
+    --weather-hero-grad: linear-gradient(135deg, #F4B400 0%, #FF7A00 100%);
+    --weather-card-bg:   #FFFFFF;
+    --weather-badge-bg:  rgba(255,255,255,0.9);
+    --border:            rgba(244, 180, 0, 0.25);
+    --shadow:            0 4px 24px rgba(244, 180, 0, 0.15);
+    --grad-soft:         linear-gradient(135deg, #FFF3CC, #FFE0B2);
+    background: var(--weather-bg);
+}
+
+/* QUENTE (25–34°C) — Alaranjado ardente */
+body.weather-hot {
+    --weather-bg:        #FFF3E0;
+    --weather-bg2:       #FFE0B2;
+    --weather-accent:    #E65100;
+    --weather-hero-grad: linear-gradient(135deg, #E65100 0%, #FF6D00 50%, #FF8F00 100%);
+    --weather-card-bg:   #FFF8F0;
+    --weather-badge-bg:  rgba(255, 243, 224, 0.95);
+    --border:            rgba(230, 81, 0, 0.2);
+    --shadow:            0 4px 24px rgba(230, 81, 0, 0.15);
+    --grad-soft:         linear-gradient(135deg, #FFE0B2, #FFCC80);
+    background: var(--weather-bg);
+}
+
+/* MUITO QUENTE (≥ 35°C) — Vermelho escaldante */
+body.weather-scorching {
+    --weather-bg:        #FBE9E7;
+    --weather-bg2:       #FFCCBC;
+    --weather-accent:    #BF360C;
+    --weather-hero-grad: linear-gradient(135deg, #B71C1C 0%, #D32F2F 40%, #FF5722 100%);
+    --weather-card-bg:   #FFF3F0;
+    --weather-badge-bg:  rgba(251, 233, 231, 0.95);
+    --border:            rgba(183, 28, 12, 0.2);
+    --shadow:            0 4px 24px rgba(183, 28, 12, 0.15);
+    --grad-soft:         linear-gradient(135deg, #FFCCBC, #FFAB91);
+    background: var(--weather-bg);
+}
+
+/* CHUVOSO — código WMO 61–82 — Verde/cinza tropical */
+body.weather-rainy {
+    --weather-bg:        #ECEFF1;
+    --weather-bg2:       #CFD8DC;
+    --weather-accent:    #1B5E20;
+    --weather-hero-grad: linear-gradient(135deg, #263238 0%, #37474F 50%, #546E7A 100%);
+    --weather-card-bg:   #F5F7F8;
+    --weather-badge-bg:  rgba(236, 239, 241, 0.95);
+    --border:            rgba(38, 50, 56, 0.15);
+    --shadow:            0 4px 24px rgba(38, 50, 56, 0.12);
+    --grad-soft:         linear-gradient(135deg, #CFD8DC, #B0BEC5);
+    background: var(--weather-bg);
+}
+
+/* TEMPESTADE — código WMO 95-99 */
+body.weather-storm {
+    --weather-bg:        #1A1A2E;
+    --weather-bg2:       #16213E;
+    --weather-accent:    #7B2FBE;
+    --weather-hero-grad: linear-gradient(135deg, #0F0C29 0%, #302B63 50%, #24243E 100%);
+    --weather-card-bg:   #1E1E3A;
+    --weather-badge-bg:  rgba(30, 30, 58, 0.9);
+    --border:            rgba(123, 47, 190, 0.3);
+    --shadow:            0 4px 24px rgba(123, 47, 190, 0.2);
+    --grad-soft:         linear-gradient(135deg, #16213E, #0F3460);
+    --dark:              #F0F0FF;
+    --gray:              #A0A0C0;
+    background: var(--weather-bg);
+    color: #F0F0FF;
+}
+
+/* NEVANDO — código WMO 71–77 */
+body.weather-snow {
+    --weather-bg:        #F0F4F8;
+    --weather-bg2:       #E2EAF0;
+    --weather-accent:    #0277BD;
+    --weather-hero-grad: linear-gradient(135deg, #B3D9F2 0%, #90CAF9 50%, #BBDEFB 100%);
+    --weather-card-bg:   #FAFCFF;
+    --weather-badge-bg:  rgba(240,244,248,0.95);
+    --border:            rgba(2, 119, 189, 0.2);
+    --shadow:            0 4px 24px rgba(2, 119, 189, 0.1);
+    --grad-soft:         linear-gradient(135deg, #E1F5FE, #B3E5FC);
+    background: var(--weather-bg);
+}
+
+/* NÉVOA / NUBLADO — código WMO 45-48 */
+body.weather-fog {
+    --weather-bg:        #F5F5F5;
+    --weather-bg2:       #EEEEEE;
+    --weather-accent:    #455A64;
+    --weather-hero-grad: linear-gradient(135deg, #78909C 0%, #90A4AE 100%);
+    --weather-card-bg:   #FAFAFA;
+    --weather-badge-bg:  rgba(245,245,245,0.95);
+    --border:            rgba(69, 90, 100, 0.2);
+    --shadow:            0 4px 24px rgba(69, 90, 100, 0.1);
+    --grad-soft:         linear-gradient(135deg, #ECEFF1, #CFD8DC);
+    background: var(--weather-bg);
+}
+
+/* Variáveis fallback — modo padrão sem classe (mapeadas para ameno) */
+body:not([class*="weather-"]) {
+    background: #FFF9F0;
+}
+
+/* Badge de clima animado ao mudar */
+.weather-badge {
+    transition: background 1s ease, border-color 1s ease;
+}
+
+/* ============================================================
+   FIRE CURSOR
+   ============================================================ */
+#fire-cursor {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+}
+
+.spark {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    border-radius: 50%;
+    animation: sparkAnim 0.8s ease-out forwards;
+}
+
+@keyframes sparkAnim {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: translateY(-40px) scale(0);
+        opacity: 0;
+    }
+}
+
+/* ============================================================
+   PAGES
+   ============================================================ */
+.page {
+    display: none;
+    min-height: 100vh;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    transition: background 1.5s ease, border-color 1.5s ease;
+}
+
+.logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 26px;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.5px;
+}
+
+.logo span {
+    font-size: 20px;
+}
+
+/* ============================================================
+   BOTTOM NAV (mobile)
+   ============================================================ */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    display: flex;
+    z-index: 200;
+    padding-bottom: env(safe-area-inset-bottom);
+    transition: background 1.5s ease, border-color 1.5s ease;
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    color: var(--gray);
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    gap: 4px;
+}
+
+.nav-item svg {
+    width: 22px;
+    height: 22px;
+}
+
+.nav-item.active {
+    color: var(--orange);
+}
+
+.nav-item:hover {
+    color: var(--gold);
+}
+
+/* ============================================================
+   SIDEBAR (desktop)
+   ============================================================ */
+.sidebar {
+    display: none;
+    width: 260px;
+    min-height: 100vh;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 28px 16px;
+    flex-direction: column;
+    gap: 8px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+    transition: background 1.5s ease, border-color 1.5s ease;
+}
+
+.sidebar-logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 28px;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 8px 12px 20px;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--gray);
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    background: none;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+    text-align: left;
+}
+
+.sidebar-item svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.sidebar-item:hover {
+    background: var(--grad-soft);
+    color: var(--orange);
+}
+
+.sidebar-item.active {
+    background: var(--grad);
+    color: white;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--grad);
+    color: white;
+    box-shadow: 0 4px 16px rgba(255, 122, 0, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 122, 0, 0.45);
+}
+
+.btn-primary:active {
+    transform: scale(0.97);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--orange);
+    border: 2px solid var(--orange);
+}
+
+.btn-outline:hover {
+    background: var(--grad-soft);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--gray);
+}
+
+.btn-ghost:hover {
+    background: var(--light-gray);
+}
+
+.btn-lg {
+    padding: 18px 36px;
+    font-size: 17px;
+    border-radius: var(--radius-lg);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* ============================================================
+   INPUTS
+   ============================================================ */
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--white);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    color: var(--dark);
+    transition: all 0.2s;
+    outline: none;
+}
+
+.input-field:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(244, 180, 0, 0.15);
+}
+
+.input-field::placeholder {
+    color: #C4C4C4;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+    cursor: pointer;
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+    background: var(--weather-card-bg, var(--white));
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    transition: background-color 1.5s ease, border-color 1.5s ease, box-shadow 1.5s ease;
+}
+
+.card-glass {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(244, 180, 0, 0.2);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    transition: background-color 1.5s ease;
+}
+
+.balance-card {
+    background: var(--grad);
+    border-radius: var(--radius-xl);
+    padding: 28px 24px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.balance-card::before {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: -60px;
+    right: -60px;
+}
+
+.balance-card::after {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    bottom: -40px;
+    left: -40px;
+}
+
+/* ============================================================
+   DECO ELEMENTS
+   ============================================================ */
+.junina-flag {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.flag-triangle {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 14px solid;
+    display: inline-block;
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--dark);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 9000;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   WEATHER BADGE — muda cor conforme o tema
+   ============================================================ */
+.weather-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--weather-badge-bg, rgba(255,255,255,0.9));
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    transition: background 1.5s ease, border-color 1.5s ease;
+}
+
+/* Badge específico por tema */
+body.weather-cold    .weather-badge { background: rgba(227,242,253,0.95); color: #0D47A1; }
+body.weather-hot     .weather-badge { background: rgba(255,224,178,0.95); color: #BF360C; }
+body.weather-scorching .weather-badge { background: rgba(255,204,188,0.95); color: #B71C1C; }
+body.weather-rainy   .weather-badge { background: rgba(207,216,220,0.95); color: #263238; }
+body.weather-storm   .weather-badge { background: rgba(30,30,58,0.9);    color: #CE93D8; }
+body.weather-snow    .weather-badge { background: rgba(227,242,253,0.95); color: #0277BD; }
+body.weather-fog     .weather-badge { background: rgba(238,238,238,0.95); color: #455A64; }
+
+/* ============================================================
+   WEATHER OVERLAY EFFECT — efeito visual de fundo animado
+   ============================================================ */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 2s ease, background 2s ease;
+}
+
+/* Efeito de flocos/chuva via pseudo-elemento quando snow/rainy */
+body.weather-rainy::before {
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(100, 150, 200, 0.03) 2px,
+        rgba(100, 150, 200, 0.03) 4px
+    );
+    opacity: 1;
+}
+
+body.weather-storm::before {
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 3px,
+        rgba(180, 100, 255, 0.04) 3px,
+        rgba(180, 100, 255, 0.04) 6px
+    );
+    opacity: 1;
+}
+
+body.weather-snow::before {
+    background: radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+    animation: snowfall 8s linear infinite;
+}
+
+@keyframes snowfall {
+    from { background-position: 0 0; }
+    to   { background-position: 20px 80px; }
+}
+
+/* ============================================================
+   CORNS
+   ============================================================ */
+.corn-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--grad-soft);
+    border: 1px solid var(--gold);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--brown);
+    transition: background 1.5s ease;
+}
+
+/* ============================================================
+   PAYMENT OPTIONS
+   ============================================================ */
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    border-radius: var(--radius);
+    border: 2px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--white);
+    margin-bottom: 10px;
+}
+
+.payment-option:hover {
+    border-color: var(--gold);
+    background: #FFFCE8;
+}
+
+.payment-option.selected {
+    border-color: var(--orange);
+    background: #FFF3E0;
+}
+
+.payment-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   AVATAR
+   ============================================================ */
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--grad);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    border: 3px solid white;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.hat-overlay {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 36px;
+}
+
+/* ============================================================
+   QUICK ACTIONS
+   ============================================================ */
+.quick-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.qa-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius);
+    background: var(--grad-soft);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    transition: all 0.2s;
+}
+
+.quick-action:hover .qa-icon {
+    background: var(--grad);
+    transform: translateY(-3px);
+}
+
+.quick-action:hover .qa-icon svg {
+    stroke: white;
+}
+
+.qa-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray);
+    text-align: center;
+}
+
+/* ============================================================
+   HISTORY ITEM
+   ============================================================ */
+.history-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   SUCCESS ANIMATION
+   ============================================================ */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes confettiDrop {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(60px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.success-icon {
+    animation: bounceIn 0.6s ease;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    animation: confettiDrop 1.2s ease forwards;
+}
+
+/* ============================================================
+   MAIN CONTENT AREA
+   ============================================================ */
+.main-content {
+    flex: 1;
+    padding: 20px 16px;
+    padding-bottom: 90px;
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Páginas que centralizam conteúdo (login, register, etc.) */
+.page.active.page-centered {
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.page.active.page-centered > .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 65px);
+    padding-top: 24px;
+    padding-bottom: 40px;
+}
+
+.page-center {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+/* ============================================================
+   PAGE TRANSITIONS
+   ============================================================ */
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page.active>* {
+    animation: fadeSlideIn 0.3s ease;
+}
+
+/* ============================================================
+   SECTION TITLE
+   ============================================================ */
+.section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.section-sub {
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 20px;
+}
+
+/* ============================================================
+   CHECKBOX
+   ============================================================ */
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--orange);
+    cursor: pointer;
+}
+
+.checkbox-row label {
+    font-size: 14px;
+    color: var(--gray);
+    cursor: pointer;
+}
+
+/* ============================================================
+   LINK
+   ============================================================ */
+.link {
+    color: var(--orange);
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.divider span {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* ============================================================
+   WELCOME HERO
+   ============================================================ */
+.hero-section {
+    background: var(--weather-hero-grad, var(--grad));
+    border-radius: 0 0 40px 40px;
+    padding: 40px 24px 48px;
+    margin: -20px -16px 0;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    transition: background 1.5s ease;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    top: -100px;
+    right: -80px;
+}
+
+/* ============================================================
+   REWARD SHOP ITEM
+   ============================================================ */
+.reward-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 16px;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.reward-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: var(--gold);
+}
+
+.reward-item .reward-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.reward-item .reward-name {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.reward-item .reward-cost {
+    font-size: 12px;
+    color: var(--orange);
+    font-weight: 800;
+}
+
+/* ============================================================
+   DESKTOP LAYOUT
+   ============================================================ */
+@media (min-width: 768px) {
+    .sidebar {
+        display: flex;
+    }
+
+    .bottom-nav {
+        display: none;
+    }
+
+    .app-header {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 260px;
+        padding: 32px 40px;
+        padding-bottom: 40px;
+        max-width: calc(100% - 260px);
+        width: calc(100% - 260px);
+    }
+
+    .desktop-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .desktop-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 16px;
+    }
+
+    .hero-section {
+        border-radius: var(--radius-xl);
+        margin: 0 0 24px;
+    }
+
+    .balance-card {
+        padding: 36px 32px;
+    }
+
+    .page-center {
+        max-width: 440px;
+        margin: 0 auto;
+    }
+
+    .page.active.page-centered > .main-content {
+        min-height: 100vh;
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+}
+
+/* ============================================================
+   PROFILE STAT
+   ============================================================ */
+.profile-stat {
+    text-align: center;
+}
+
+.profile-stat-val {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.profile-stat-label {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 600;
+}
+
+/* ============================================================
+   RANGE INPUT
+   ============================================================ */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--grad);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 122, 0, 0.4);
+}
+
+/* ============================================================
+   VALUE DISPLAY
+   ============================================================ */
+.value-display {
+    font-family: 'Fredoka One', cursive;
+    font-size: 40px;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin: 12px 0;
+}
+
+/* ============================================================
+   SUMMARY BOX
+   ============================================================ */
+.summary-box {
+    background: var(--grad-soft);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin: 16px 0;
+    transition: background 1.5s ease;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 14px;
+}
+
+.summary-row .label {
+    color: var(--gray);
+    font-weight: 600;
+}
+
+.summary-row .value {
+    font-weight: 800;
+    color: var(--dark);
+}
+
+/* ============================================================
+   NUMBER FORMAT
+   ============================================================ */
+.currency {
+    font-family: 'Fredoka One', cursive;
+}
+
+/* ============================================================
+   WEATHER INFO CARD — card especial de clima no dashboard
+   ============================================================ */
+.weather-info-card {
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    background: var(--grad-soft);
+    transition: background 1.5s ease, border-color 1.5s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.weather-info-card .weather-icon-big {
+    font-size: 36px;
+    line-height: 1;
+}
+
+.weather-info-card .weather-details {
+    flex: 1;
+}
+
+.weather-info-card .weather-temp {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.weather-info-card .weather-desc {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.weather-info-card .weather-location {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 2px;
+    opacity: 0.8;
+}

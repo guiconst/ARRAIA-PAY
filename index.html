@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arraia Pay – Sua Carteira Digital Junina</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ✅ Supabase SDK (CDN) — deve vir ANTES do script.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+    <!-- FIRE CURSOR CANVAS -->
+    <div id="fire-cursor"></div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">Mensagem</div>
+
+    <!-- ==================== PAGE: WELCOME ==================== -->
+    <div class="page active" id="page-welcome">
+        <div class="main-content" style="padding-top: 0; padding-bottom: 30px; max-width: 100%;">
+            <!-- Mobile header -->
+            <div class="app-header"
+                style="position: static; margin: 0 -16px; padding: 16px 20px; border-radius: 0;">
+                <div class="logo">🌽 Arraia Pay</div>
+                <div class="weather-badge" id="weather-badge-welcome">
+                    <span>🌡️</span><span id="weather-text-w">—</span>
+                </div>
+            </div>
+
+            <div style="max-width: 520px; margin: 0 auto; padding: 16px;">
+                <!-- HERO -->
+                <div class="hero-section">
+                    <div class="junina-flag">
+                        <div class="flag-triangle" style="border-top-color:#D62828;"></div>
+                        <div class="flag-triangle" style="border-top-color:#F4B400;"></div>
+                        <div class="flag-triangle" style="border-top-color:#2196F3;"></div>
+                        <div class="flag-triangle" style="border-top-color:#4CAF50;"></div>
+                        <div class="flag-triangle" style="border-top-color:#D62828;"></div>
+                        <div class="flag-triangle" style="border-top-color:#F4B400;"></div>
+                        <div class="flag-triangle" style="border-top-color:#8B4513;"></div>
+                    </div>
+                    <p
+                        style="font-size:13px; opacity:0.85; margin-bottom:6px; font-weight:700; letter-spacing:1px;">
+                        BOA NOITE, VISITANTE! 👋</p>
+                    <h1
+                        style="font-family:'Fredoka One',cursive; font-size:28px; line-height:1.2; margin-bottom:10px;">
+                        Sua carteira digital chegou para facilitar sua Festa Junina.</h1>
+                    <p style="font-size:14px; opacity:0.9; margin-bottom:24px;">Seguro, rápido e com muito arraiá!
+                        🎪</p>
+                    <button class="btn btn-lg"
+                        style="background:rgba(255,255,255,0.95); color:var(--orange); box-shadow:0 4px 20px rgba(0,0,0,0.15);"
+                        onclick="showPage('page-login')">
+                        Entrar na Conta →
+                    </button>
+                </div>
+
+                <!-- BALANCE PREVIEW -->
+                <div class="balance-card" style="margin: 20px 0;">
+                    <p
+                        style="font-size:12px; opacity:0.8; font-weight:700; letter-spacing:1px; margin-bottom:4px;">
+                        SALDO DISPONÍVEL</p>
+                    <p class="currency" style="font-size:36px; font-weight:800; margin-bottom:4px;">R$ 1.547,80</p>
+                    <p style="font-size:12px; opacity:0.75;">**** **** **** 4217</p>
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+                        <div class="corn-badge"
+                            style="background:rgba(255,255,255,0.2); border-color:rgba(255,255,255,0.4); color:white;">
+                            🌽 320 Grãos
+                        </div>
+                        <div style="font-size:12px; opacity:0.8; font-weight:700;">ARRAIA PAY ✦</div>
+                    </div>
+                </div>
+
+                <!-- FEATURES -->
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px;">
+                    <div class="card" style="padding:20px; text-align:center;">
+                        <div style="font-size:28px; margin-bottom:8px;">⚡</div>
+                        <div style="font-family:'Fredoka One',cursive; font-size:15px; margin-bottom:4px;">Depósito
+                            Rápido</div>
+                        <div style="font-size:12px; color:var(--gray);">PIX em segundos</div>
+                    </div>
+                    <div class="card" style="padding:20px; text-align:center;">
+                        <div style="font-size:28px; margin-bottom:8px;">🌽</div>
+                        <div style="font-family:'Fredoka One',cursive; font-size:15px; margin-bottom:4px;">Grãos de
+                            Milho</div>
+                        <div style="font-size:12px; color:var(--gray);">Ganhe recompensas</div>
+                    </div>
+                    <div class="card" style="padding:20px; text-align:center;">
+                        <div style="font-size:28px; margin-bottom:8px;">🔒</div>
+                        <div style="font-family:'Fredoka One',cursive; font-size:15px; margin-bottom:4px;">100%
+                            Seguro</div>
+                        <div style="font-size:12px; color:var(--gray);">Criptografado</div>
+                    </div>
+                    <div class="card" style="padding:20px; text-align:center;">
+                        <div style="font-size:28px; margin-bottom:8px;">🎪</div>
+                        <div style="font-family:'Fredoka One',cursive; font-size:15px; margin-bottom:4px;">Tema
+                            Junino</div>
+                        <div style="font-size:12px; color:var(--gray);">Interface festiva</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-full btn-lg" onclick="showPage('page-register')">
+                    🎉 Criar Conta Grátis
+                </button>
+                <div style="text-align:center; margin-top:12px;">
+                    <span style="font-size:14px; color:var(--gray);">Já tem conta? </span>
+                    <a class="link" onclick="showPage('page-login')">Fazer Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: REGISTER ==================== -->
+    <div class="page page-centered" id="page-register">
+        <div class="app-header">
+            <button class="btn btn-ghost" style="padding:8px;" onclick="showPage('page-welcome')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"
+                    viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <div class="logo">🌽 Arraia Pay</div>
+            <div style="width:36px;"></div>
+        </div>
+        <div class="main-content">
+            <div class="page-center">
+                <h2 class="section-title" style="margin-bottom:2px;">Criar Conta</h2>
+                <p class="section-sub">Junte-se ao arraiá digital! 🎪</p>
+
+                <div class="input-group">
+                    <label class="input-label">Nome Completo</label>
+                    <input class="input-field" type="text" placeholder="João Festeiro" id="reg-name">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">E-mail</label>
+                    <input class="input-field" type="email" placeholder="joao@email.com" id="reg-email">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Senha</label>
+                    <div class="input-wrapper">
+                        <input class="input-field" type="password" placeholder="Mínimo 8 caracteres" id="reg-pass"
+                            style="padding-right:48px;">
+                        <span class="input-icon" onclick="togglePass('reg-pass')">👁️</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Confirmar Senha</label>
+                    <div class="input-wrapper">
+                        <input class="input-field" type="password" placeholder="Repita a senha" id="reg-pass2"
+                            style="padding-right:48px;">
+                        <span class="input-icon" onclick="togglePass('reg-pass2')">👁️</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Data de Nascimento</label>
+                    <input class="input-field" type="date" id="reg-birth">
+                </div>
+                <div class="checkbox-row" style="margin-bottom:24px;">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Lembrar de mim neste dispositivo</label>
+                </div>
+
+                <!-- ✅ id="reg-btn" para o setLoading funcionar -->
+                <button id="reg-btn" class="btn btn-primary btn-full btn-lg" onclick="doRegister()">
+                    🎉 Criar Conta
+                </button>
+                <div style="text-align:center; margin-top:16px;">
+                    <span style="font-size:14px; color:var(--gray);">Já tem conta? </span>
+                    <a class="link" onclick="showPage('page-login')">Fazer Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: LOGIN ==================== -->
+    <div class="page page-centered" id="page-login">
+        <div class="app-header">
+            <button class="btn btn-ghost" style="padding:8px;" onclick="showPage('page-welcome')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"
+                    viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <div class="logo">🌽 Arraia Pay</div>
+            <div style="width:36px;"></div>
+        </div>
+        <div class="main-content">
+            <div class="page-center">
+                <div style="text-align:center; margin-bottom:28px;">
+                    <div style="font-size:56px; margin-bottom:12px;">🎪</div>
+                    <h2 class="section-title">Bem-vindo de volta!</h2>
+                    <p class="section-sub">Entre na sua carteira junina</p>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">E-mail</label>
+                    <input class="input-field" type="email" placeholder="seu@email.com" id="login-email">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Senha</label>
+                    <div class="input-wrapper">
+                        <input class="input-field" type="password" placeholder="Sua senha" id="login-pass"
+                            style="padding-right:48px;">
+                        <span class="input-icon" onclick="togglePass('login-pass')">👁️</span>
+                    </div>
+                </div>
+
+                <div style="text-align:right; margin-bottom:20px;">
+                    <a class="link" style="font-size:13px;" onclick="showPage('page-forgot')">Esqueceu a
+                        senha?</a>
+                </div>
+
+                <!-- ✅ id="login-btn" -->
+                <button id="login-btn" class="btn btn-primary btn-full btn-lg" onclick="doLogin()">
+                    🚀 Entrar
+                </button>
+
+                <div class="divider"><span>ou</span></div>
+
+                <button class="btn btn-outline btn-full" onclick="showPage('page-register')">
+                    Criar nova conta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: FORGOT PASSWORD ==================== -->
+    <div class="page page-centered" id="page-forgot">
+        <div class="app-header">
+            <button class="btn btn-ghost" style="padding:8px;" onclick="showPage('page-login')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"
+                    viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <div class="logo">🌽 Arraia Pay</div>
+            <div style="width:36px;"></div>
+        </div>
+        <div class="main-content">
+            <div class="page-center">
+                <div style="text-align:center; margin-bottom:32px;">
+                    <div style="font-size:56px; margin-bottom:12px;">🔑</div>
+                    <h2 class="section-title">Recuperar Senha</h2>
+                    <p style="font-size:14px; color:var(--gray); margin-top:8px; line-height:1.5;">Forneça o
+                        endereço de e-mail da sua conta e enviaremos um link para redefinição.</p>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">E-mail</label>
+                    <input class="input-field" type="email" placeholder="seu@email.com" id="forgot-email">
+                </div>
+
+                <!-- ✅ id="forgot-btn" -->
+                <button id="forgot-btn" class="btn btn-primary btn-full btn-lg" onclick="doForgot()">
+                    📨 Solicitar Link
+                </button>
+
+                <div style="text-align:center; margin-top:16px;">
+                    <a class="link" onclick="showPage('page-login')">← Voltar ao login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: DASHBOARD ==================== -->
+    <div class="page" id="page-dashboard">
+        <!-- SIDEBAR (desktop) -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">🌽 Arraia Pay</div>
+            <button class="sidebar-item active" id="sb-home" onclick="showDashTab('home')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Início
+            </button>
+            <button class="sidebar-item" id="sb-deposit" onclick="showPage('page-deposit')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Depositar
+            </button>
+            <button class="sidebar-item" id="sb-rewards" onclick="showDashTab('rewards')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="6" />
+                    <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+                </svg>
+                Recompensas
+            </button>
+            <button class="sidebar-item" id="sb-history" onclick="showDashTab('history')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Histórico
+            </button>
+            <button class="sidebar-item" id="sb-profile" onclick="showPage('page-profile')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                Perfil
+            </button>
+            <div style="margin-top:auto;">
+                <div class="weather-badge" id="weather-badge-sb"
+                    style="width:100%; justify-content:center; margin-bottom:12px;">
+                    <span>🌡️</span><span id="weather-text-sb">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile header -->
+        <div class="app-header">
+            <div class="logo">🌽 Arraia Pay</div>
+            <div class="weather-badge">
+                <span>🌡️</span><span id="weather-text-m">—</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- TAB: HOME -->
+            <div id="dash-home">
+                <div
+                    style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div>
+                        <p style="font-size:13px; color:var(--gray); font-weight:600;">Olá,</p>
+                        <h2 class="section-title" style="margin:0;" id="dash-greeting">João Festeiro 👋</h2>
+                    </div>
+                    <div class="corn-badge" id="corn-display">🌽 <span id="corn-count">0</span> Grãos</div>
+                </div>
+
+                <!-- Banner -->
+                <div
+                    style="background:linear-gradient(135deg,#4CAF50,#2E7D32); border-radius:var(--radius-lg); padding:16px 20px; margin-bottom:20px; color:white; display:flex; align-items:center; gap:14px;">
+                    <div style="font-size:32px;">🎆</div>
+                    <div>
+                        <div style="font-family:'Fredoka One',cursive; font-size:15px; margin-bottom:2px;">Festa
+                            Junina 2025!</div>
+                        <div style="font-size:12px; opacity:0.85;">Ganhe 2x Grãos em todos os depósitos hoje!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WEATHER INFO CARD — atualizado dinamicamente pelo JS -->
+                <div class="weather-info-card" id="weather-info-card">
+                    <div class="weather-icon-big">🌡️</div>
+                    <div class="weather-details">
+                        <div class="weather-temp" id="wi-temp">—</div>
+                        <div class="weather-desc" id="wi-desc">Carregando clima...</div>
+                        <div class="weather-location" id="wi-city"></div>
+                    </div>
+                    <div style="font-size:11px; color:var(--gray); font-weight:600; text-align:right; line-height:1.4;">
+                        Tema<br>adaptado<br>ao clima ✨
+                    </div>
+                </div>
+
+                <!-- Balance -->
+                <div class="balance-card" style="margin-bottom:20px;">
+                    <p
+                        style="font-size:11px; opacity:0.75; font-weight:700; letter-spacing:1.5px; margin-bottom:6px;">
+                        SALDO DISPONÍVEL</p>
+                    <p class="currency" style="font-size:40px; font-weight:800;" id="balance-display">R$ 0,00</p>
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
+                        <p style="font-size:12px; opacity:0.7;">**** **** **** 4217</p>
+                        <button class="btn"
+                            style="background:rgba(255,255,255,0.2); color:white; padding:8px 16px; font-size:13px; border-radius:50px;"
+                            onclick="showPage('page-deposit')">+ Depositar</button>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div style="display:flex; gap:8px; margin-bottom:24px;">
+                    <div class="quick-action" onclick="showPage('page-deposit')">
+                        <div class="qa-icon">
+                            <svg width="22" height="22" fill="none" stroke="var(--orange)" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                        </div>
+                        <span class="qa-label">Depositar</span>
+                    </div>
+                    <div class="quick-action" onclick="showDashTab('history')">
+                        <div class="qa-icon">
+                            <svg width="22" height="22" fill="none" stroke="var(--orange)" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <span class="qa-label">Histórico</span>
+                    </div>
+                    <div class="quick-action" onclick="showDashTab('rewards')">
+                        <div class="qa-icon">
+                            <svg width="22" height="22" fill="none" stroke="var(--orange)" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <circle cx="12" cy="8" r="6" />
+                                <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+                            </svg>
+                        </div>
+                        <span class="qa-label">Prêmios</span>
+                    </div>
+                    <div class="quick-action" onclick="showPage('page-profile')">
+                        <div class="qa-icon">
+                            <svg width="22" height="22" fill="none" stroke="var(--orange)" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                        </div>
+                        <span class="qa-label">Perfil</span>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions preview (3 fixos) -->
+                <div class="card">
+                    <h3 style="font-family:'Fredoka One',cursive; font-size:16px; margin-bottom:16px;">Últimas
+                        Movimentações</h3>
+                    <div class="history-item">
+                        <div class="history-icon" style="background:#E8F5E9;">💰</div>
+                        <div style="flex:1;">
+                            <div style="font-weight:700; font-size:14px;">Depósito PIX</div>
+                            <div style="font-size:12px; color:var(--gray);">Hoje, 14:32</div>
+                        </div>
+                        <div style="font-weight:800; color:#2E7D32;">+R$ 200,00</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon" style="background:#FFF3E0;">🛍️</div>
+                        <div style="flex:1;">
+                            <div style="font-weight:700; font-size:14px;">Compra Barraquinha</div>
+                            <div style="font-size:12px; color:var(--gray);">Ontem, 20:15</div>
+                        </div>
+                        <div style="font-weight:800; color:var(--red);">-R$ 45,00</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-icon" style="background:#E3F2FD;">💳</div>
+                        <div style="flex:1;">
+                            <div style="font-weight:700; font-size:14px;">Depósito Cartão</div>
+                            <div style="font-size:12px; color:var(--gray);">22/06, 09:00</div>
+                        </div>
+                        <div style="font-weight:800; color:#2E7D32;">+R$ 500,00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: REWARDS -->
+            <div id="dash-rewards" style="display:none;">
+                <h2 class="section-title">Loja de Recompensas</h2>
+                <p class="section-sub">Troque seus Grãos de Milho por itens exclusivos!</p>
+
+                <div class="corn-badge" style="margin-bottom:20px; font-size:15px; padding:10px 20px;">
+                    🌽 Você tem <strong id="corn-shop-count" style="margin:0 4px;">0</strong> Grãos de Milho
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
+                    <div class="reward-item" onclick="buyReward('chapeu', 150, '🎩')">
+                        <div class="reward-icon">🎩</div>
+                        <div class="reward-name">Chapéu de Palha Digital</div>
+                        <div class="reward-cost">150 🌽 Grãos</div>
+                    </div>
+                    <div class="reward-item" onclick="buyReward('bandeira', 80, '🚩')">
+                        <div class="reward-icon">🚩</div>
+                        <div class="reward-name">Bandeirinha Festiva</div>
+                        <div class="reward-cost">80 🌽 Grãos</div>
+                    </div>
+                    <div class="reward-item" onclick="buyReward('fogueira', 200, '🔥')">
+                        <div class="reward-icon">🔥</div>
+                        <div class="reward-name">Fogueira de Perfil</div>
+                        <div class="reward-cost">200 🌽 Grãos</div>
+                    </div>
+                    <div class="reward-item" onclick="buyReward('estrela', 100, '⭐')">
+                        <div class="reward-icon">⭐</div>
+                        <div class="reward-name">Estrela Dourada</div>
+                        <div class="reward-cost">100 🌽 Grãos</div>
+                    </div>
+                    <div class="reward-item" onclick="buyReward('cacique', 250, '👑')">
+                        <div class="reward-icon">👑</div>
+                        <div class="reward-name">Coroa do Cacique</div>
+                        <div class="reward-cost">250 🌽 Grãos</div>
+                    </div>
+                    <div class="reward-item" onclick="buyReward('balao', 60, '🎈')">
+                        <div class="reward-icon">🎈</div>
+                        <div class="reward-name">Balão Colorido</div>
+                        <div class="reward-cost">60 🌽 Grãos</div>
+                    </div>
+                </div>
+
+                <div class="card" style="background:var(--grad-soft); border-color:var(--gold);">
+                    <h4 style="font-family:'Fredoka One',cursive; margin-bottom:8px;">Como ganhar Grãos? 🌽</h4>
+                    <p style="font-size:13px; color:var(--gray); line-height:1.6;">• Depósito: +10 grãos a cada R$
+                        10 depositados<br>• Compras: +5 grãos a cada R$ 10 gastos<br>• Indicações: +100 grãos por
+                        amigo indicado<br>• Login diário: +5 grãos por dia!</p>
+                </div>
+            </div>
+
+            <!-- TAB: HISTORY — renderizado pelo JS via Supabase -->
+            <div id="dash-history" style="display:none;">
+                <h2 class="section-title">Histórico Completo</h2>
+                <p class="section-sub">Todas suas movimentações</p>
+                <div class="card">
+                    <div id="history-list">
+                        <p style="text-align:center; color:var(--gray); padding:24px 0;">Carregando... ⏳</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Nav Mobile -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" id="bn-home" onclick="showDashTab('home')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                Início
+            </button>
+            <button class="nav-item" id="bn-deposit" onclick="showPage('page-deposit')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                Depositar
+            </button>
+            <button class="nav-item" id="bn-rewards" onclick="showDashTab('rewards')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="6" />
+                    <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+                </svg>
+                Prêmios
+            </button>
+            <button class="nav-item" id="bn-history" onclick="showDashTab('history')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Histórico
+            </button>
+            <button class="nav-item" id="bn-profile" onclick="showPage('page-profile')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                Perfil
+            </button>
+        </nav>
+    </div>
+
+    <!-- ==================== PAGE: DEPOSIT ==================== -->
+    <div class="page" id="page-deposit">
+        <div class="app-header">
+            <button class="btn btn-ghost" style="padding:8px;" onclick="showPage('page-dashboard')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"
+                    viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <div class="logo">Depositar</div>
+            <div style="width:36px;"></div>
+        </div>
+        <div class="sidebar" id="sidebar-deposit">
+            <div class="sidebar-logo">🌽 Arraia Pay</div>
+            <button class="sidebar-item" onclick="showPage('page-dashboard')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                </svg> Início
+            </button>
+            <button class="sidebar-item active">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                </svg> Depositar
+            </button>
+            <button class="sidebar-item" onclick="showPage('page-profile')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg> Perfil
+            </button>
+        </div>
+        <div class="main-content">
+            <div class="page-center">
+                <h2 class="section-title">Fazer Depósito</h2>
+                <p class="section-sub">Escolha o valor e método de pagamento</p>
+
+                <div
+                    style="background:var(--grad-soft); border:1px solid var(--gold); border-radius:var(--radius); padding:12px 16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:13px; color:var(--gray); font-weight:600;">Saldo atual</span>
+                    <span class="currency" style="font-weight:800; color:var(--orange);"
+                        id="dep-current-balance">R$ 0,00</span>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Valor para Depositar</label>
+                    <input class="input-field" type="number" placeholder="0,00" id="deposit-amount" min="10"
+                        step="10"
+                        style="font-size:24px; font-weight:800; text-align:center; padding:20px;"
+                        oninput="updateDepositSummary()">
+                </div>
+
+                <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
+                    <button class="btn btn-outline" style="padding:8px 16px; font-size:13px; border-radius:50px;"
+                        onclick="setAmount(50)">R$ 50</button>
+                    <button class="btn btn-outline" style="padding:8px 16px; font-size:13px; border-radius:50px;"
+                        onclick="setAmount(100)">R$ 100</button>
+                    <button class="btn btn-outline" style="padding:8px 16px; font-size:13px; border-radius:50px;"
+                        onclick="setAmount(200)">R$ 200</button>
+                    <button class="btn btn-outline" style="padding:8px 16px; font-size:13px; border-radius:50px;"
+                        onclick="setAmount(500)">R$ 500</button>
+                </div>
+
+                <div style="margin-bottom:16px;">
+                    <div class="input-label" style="margin-bottom:12px;">Forma de Pagamento</div>
+                    <div class="payment-option selected" id="pay-pix" onclick="selectPayment('pix')">
+                        <div class="payment-icon" style="background:#E8F5E9;">💚</div>
+                        <div style="flex:1;">
+                            <div style="font-weight:700; font-size:14px;">PIX</div>
+                            <div style="font-size:12px; color:var(--gray);">Instântaneo • Gratuito</div>
+                        </div>
+                        <div style="width:20px; height:20px; border-radius:50%; background:var(--grad); display:flex; align-items:center; justify-content:center;"
+                            id="pix-check">✓</div>
+                    </div>
+                    <div class="payment-option" id="pay-card" onclick="selectPayment('card')">
+                        <div class="payment-icon" style="background:#E3F2FD;">💳</div>
+                        <div style="flex:1;">
+                            <div style="font-weight:700; font-size:14px;">Cartão de Crédito/Débito</div>
+                            <div style="font-size:12px; color:var(--gray);">Até 12x • Taxa de 2,5%</div>
+                        </div>
+                        <div style="width:20px; height:20px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:10px; color:transparent;"
+                            id="card-check">✓</div>
+                    </div>
+                </div>
+
+                <div class="summary-box" id="deposit-summary" style="display:none;">
+                    <div class="summary-row">
+                        <span class="label">Valor do depósito</span>
+                        <span class="value" id="sum-amount">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row" id="sum-tax-row" style="display:none;">
+                        <span class="label">Taxa (2,5%)</span>
+                        <span class="value" id="sum-tax" style="color:var(--red);">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row"
+                        style="border-top:1px dashed var(--gold); margin-top:8px; padding-top:8px;">
+                        <span class="label" style="font-weight:800; color:var(--dark);">Total a creditar</span>
+                        <span class="value" style="color:var(--orange); font-size:16px;"
+                            id="sum-total">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row" style="margin-top:8px;">
+                        <span class="label">Grãos de Milho</span>
+                        <span class="value" style="color:var(--brown);">🌽 +<span id="sum-corns">0</span>
+                            Grãos</span>
+                    </div>
+                </div>
+
+                <!-- ✅ id="deposit-btn" -->
+                <button id="deposit-btn" class="btn btn-primary btn-full btn-lg" onclick="doDeposit()"
+                    style="margin-top:8px;">
+                    ✅ Confirmar Depósito
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: SUCCESS ==================== -->
+    <div class="page" id="page-success">
+        <div class="main-content"
+            style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; text-align:center;">
+            <div style="position:relative; margin-bottom:24px;" id="success-confetti-area">
+                <div class="success-icon" style="font-size:80px;">✅</div>
+            </div>
+
+            <h2
+                style="font-family:'Fredoka One',cursive; font-size:28px; margin-bottom:8px; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">
+                Eita trem bão!</h2>
+            <p style="font-size:18px; font-weight:700; margin-bottom:24px; color:var(--dark);">Seu depósito chegou!
+                🎉</p>
+
+            <div class="card" style="width:100%; max-width:360px; margin-bottom:24px;">
+                <div style="margin-bottom:16px;">
+                    <p style="font-size:13px; color:var(--gray); font-weight:600; margin-bottom:4px;">VALOR
+                        DEPOSITADO</p>
+                    <p class="currency" style="font-size:36px; font-weight:800; color:var(--orange);"
+                        id="success-amount">R$ 0,00</p>
+                </div>
+                <div
+                    style="background:var(--grad-soft); border-radius:var(--radius); padding:12px; display:flex; align-items:center; justify-content:center; gap:10px;">
+                    <span style="font-size:24px;">🌽</span>
+                    <div>
+                        <p style="font-size:13px; color:var(--gray); font-weight:600;">Grãos Ganhos</p>
+                        <p style="font-family:'Fredoka One',cursive; font-size:20px; color:var(--brown);"
+                            id="success-corns">+0 Grãos de Milho</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="junina-flag" style="justify-content:center; margin-bottom:24px;">
+                <div class="flag-triangle" style="border-top-color:#D62828;"></div>
+                <div class="flag-triangle" style="border-top-color:#F4B400;"></div>
+                <div class="flag-triangle" style="border-top-color:#2196F3;"></div>
+                <div class="flag-triangle" style="border-top-color:#4CAF50;"></div>
+                <div class="flag-triangle" style="border-top-color:#D62828;"></div>
+            </div>
+
+            <button class="btn btn-primary btn-lg" style="min-width:200px;" onclick="showPage('page-dashboard')">
+                OK, Boa Festa! 🎪
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE: PROFILE ==================== -->
+    <div class="page" id="page-profile">
+        <div class="app-header">
+            <button class="btn btn-ghost" style="padding:8px;" onclick="showPage('page-dashboard')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"
+                    viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+            <div class="logo">Perfil</div>
+            <div style="width:36px;"></div>
+        </div>
+        <div class="sidebar" id="sidebar-profile">
+            <div class="sidebar-logo">🌽 Arraia Pay</div>
+            <button class="sidebar-item" onclick="showPage('page-dashboard')">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                </svg> Início
+            </button>
+            <button class="sidebar-item active">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg> Perfil
+            </button>
+        </div>
+        <div class="main-content">
+            <div class="page-center">
+                <div class="card" style="text-align:center; margin-bottom:20px; padding:32px 24px;">
+                    <div style="display:flex; justify-content:center; margin-bottom:16px;">
+                        <div class="avatar" id="profile-avatar">
+                            <span style="font-size:36px;">👤</span>
+                            <div class="hat-overlay" id="hat-display" style="display:none;">🎩</div>
+                        </div>
+                    </div>
+                    <h3 style="font-family:'Fredoka One',cursive; font-size:22px; margin-bottom:4px;"
+                        id="profile-name">—</h3>
+                    <p style="font-size:13px; color:var(--gray);" id="profile-email">—</p>
+
+                    <div
+                        style="display:flex; gap:16px; justify-content:center; margin:20px 0; padding:16px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+                        <div class="profile-stat">
+                            <div class="profile-stat-val" id="stat-corns">0</div>
+                            <div class="profile-stat-label">Grãos 🌽</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-val" id="stat-balance">R$ 0</div>
+                            <div class="profile-stat-label">Saldo</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-val">—</div>
+                            <div class="profile-stat-label">Transações</div>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background:var(--grad-soft); border-radius:var(--radius); padding:14px; margin-bottom:16px; display:flex; align-items:center; gap:12px;">
+                        <span style="font-size:28px;">🎩</span>
+                        <div style="flex:1; text-align:left;">
+                            <div style="font-weight:700; font-size:14px;">Chapéu de Palha Digital</div>
+                            <div style="font-size:12px; color:var(--gray);">Item de perfil desbloqueado</div>
+                        </div>
+                        <button class="btn btn-primary" style="padding:8px 14px; font-size:12px;" id="hat-btn"
+                            onclick="toggleHat()">Equipar</button>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom:16px;">
+                    <h4 style="font-family:'Fredoka One',cursive; margin-bottom:16px; font-size:16px;">Informações
+                    </h4>
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid var(--border);">
+                            <span style="font-size:13px; color:var(--gray); font-weight:600;">Nome</span>
+                            <span style="font-size:14px; font-weight:700;" id="info-name">—</span>
+                        </div>
+                        <div
+                            style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; border-bottom:1px solid var(--border);">
+                            <span style="font-size:13px; color:var(--gray); font-weight:600;">E-mail</span>
+                            <span style="font-size:14px; font-weight:700;" id="info-email">—</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:13px; color:var(--gray); font-weight:600;">Nascimento</span>
+                            <span style="font-size:14px; font-weight:700;" id="info-birth">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-outline btn-full" style="margin-bottom:12px;" onclick="editProfile()">
+                    ✏️ Editar Perfil
+                </button>
+                <button class="btn btn-ghost btn-full" style="color:var(--red); border:2px solid var(--red);"
+                    onclick="doLogout()">
+                    🚪 Sair da Conta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- script.js deve vir por último -->
+    <script src="script.js"></script>
+</body>
+
+</html>
